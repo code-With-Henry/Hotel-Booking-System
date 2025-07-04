@@ -1,0 +1,281 @@
+
+//Default Route
+###
+GET http://localhost:4000/
+
+
+//Get All users 
+###
+GET http://localhost:4000/api/users/
+Authorization: 
+
+//Get user by id
+###
+GET http://localhost:4000/api/users/2
+
+//Create new user
+###
+POST http://localhost:4000/api/users/
+Content-Type: application/json
+
+{
+    "firstName": "melvin",
+    "lastName": "Koech",
+    "email": "melvin@gmail.com",
+    "contactPhone": "0716037570",
+    "address":"123005",
+    "userType": "member",
+    "password":"1234"
+}
+
+//Update user by id
+###
+PUT http://localhost:4000/api/users/1
+Authorization: 
+Content-Type: application/json
+
+{
+    "firstName": "Newton",
+    "lastName": "Koskei",
+    "email": "henry@gmail.com",
+    "contactPhone": "0712037576",
+    "address":"123455",
+    "userType": "member",
+    "password":"1234"
+}
+
+//Delete user by id
+###
+DELETE http://localhost:4000/api/users/2
+Authorization: 
+
+
+//Register user
+###
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "newton",
+  "lastName": "Rop",
+  "email": "newtonrop@gmail.com",
+  "password": "admin",
+  "contactPhone": "0716037571",
+  "address":"1220005",
+  "userType": "admin"
+}
+
+//Login user
+###
+POST http://localhost:4000/api/auth/login
+content-type: application/json
+
+{
+  "email": "newtonrop@gmail.com",
+  "password": "admin"
+}
+
+// 2. Endpoints for Hotel
+
+//Get All Hotels 
+###
+GET http://localhost:4000/api/hotels/
+
+//Get Hotel by id 
+###
+GET http://localhost:4000/api/hotels/2
+
+//Create new Hotel
+###
+POST http://localhost:4000/api/hotels/
+Content-Type: application/json
+
+{
+  "name": "Central View inn Hotel",
+  "location": "baringo",
+  "address": "10000421"
+}
+
+//Update Hotel by id 
+###
+PUT http://localhost:4000/api/hotels/1
+Content-Type: application/json
+
+{
+  "name": "5 star Hotel",
+  "location": "Nairobi",
+  "address": "40000400"
+}
+
+//Delete Hotel by id
+###
+DELETE http://localhost:4000/api/hotels/2
+
+// 3. Endpoints for Room
+
+//Get All Rooms 
+###
+GET http://localhost:4000/api/rooms/
+
+//Get Room by id 
+###
+GET http://localhost:4000/api/rooms/2
+
+//Create new Room
+###
+POST http://localhost:4000/api/rooms/
+Content-Type: application/json
+
+{
+  "hotelId": 3,
+  "roomType": "Bungalow Room",
+  "pricePerNight": 6000.00,
+  "capacity": 3,
+  "amenities": "WiFi,Air Conditioning,TV,Mini Bar",
+  "isAvailable": true
+}
+
+//Update Existing Room by id
+###
+PUT http://localhost:4000/api/rooms/3
+Content-Type: application/json
+
+{
+  "hotelId": 1,
+  "roomType": "Twin Room",
+  "pricePerNight": 4000.00,
+  "capacity": 5,
+  "amenities": "WiFi,Air Conditioning,TV,Mini Bar,shawer",
+  "isAvailable": true
+}
+
+//Delete Room by id
+###
+DELETE http://localhost:4000/api/rooms/4
+
+//3. Endpoints for Booking
+//Get All Booking 
+###
+GET http://localhost:4000/api/bookings
+
+//Get Booking by id 
+###
+GET http://localhost:4000/api/bookings/2
+
+//Create new Booking
+###
+POST http://localhost:4000/api/bookings/
+Content-Type: application/json
+
+{
+  "userId": 4,
+  "roomId": 8,
+  "checkInDate": "2025-07-10T14:00:00Z",
+  "checkOutDate": "2025-07-12T10:00:00Z",
+  "totalAmount": "1500.00",
+  "bookingStatus": "Pending"
+}
+
+//Create new Booking
+###
+PUT http://localhost:4000/api/bookings/3
+Content-Type: application/json
+
+{
+  "userId": 4,
+  "roomId": 8,
+  "checkInDate": "2025-07-10T14:00:00Z",
+  "checkOutDate": "2025-07-12T10:00:00Z",
+  "totalAmount": "1400.00",
+  "bookingStatus": "Pending"
+}
+
+//Delete Booking by id
+###
+DELETE http://localhost:4000/api/bookings/4
+
+//5. Endpoints for Payment
+
+//Get All Payments
+###
+GET http://localhost:4000/api/payments
+
+//Get Payments by id 
+###
+GET http://localhost:4000/api/payments/1
+
+//Create new Payments
+###
+POST http://localhost:4000/api/payments/
+Content-Type: application/json
+
+{
+  "bookingId": 3,
+  "amount": "6000.00",
+  "paymentMethod": "Mpesa",
+  "transactionId": "MP123456789",
+  "paymentStatus": "Completed",
+  "paymentDate": "2025-07-01T12:30:00z"
+}
+
+//Create new Payments
+###
+PUT http://localhost:4000/api/payments/1
+Content-Type: application/json
+
+{
+  "bookingId": 2,
+  "amount": "4000.00",
+  "paymentMethod": "Mpesa",
+  "transactionId": "MP123456755",
+  "paymentStatus": "Completed",
+  "paymentDate": "2025-07-01T12:30:00z"
+}
+
+//Delete payment by id
+###
+DELETE http://localhost:4000/api/payments/3
+
+//6. Endpoints for Tickets
+
+//Get All tickets
+###
+GET http://localhost:4000/api/tickets
+
+//Get ticket by id 
+###
+GET http://localhost:4000/api/tickets/2
+
+//Create new tickets
+###
+POST http://localhost:4000/api/tickets/
+Content-Type: application/json
+
+{
+  "userId": 4,
+  "subject": "Request for refund",
+  "description": "I canceled my reservation two days ago and have not yet received the refund.",
+  "status": "Resolved"
+}
+
+//Update existing  tickets
+###
+PUT http://localhost:4000/api/tickets/4
+Content-Type: application/json
+
+{
+  "userId": 4,
+  "subject": "Request for refund",
+  "description": "I canceled my reservation two days ago and have not yet received the refund.",
+  "status": "Open"
+}
+
+//DELETE existing  tickets
+###
+DELETE http://localhost:4000/api/tickets/4
+
+
+
+
+
+
