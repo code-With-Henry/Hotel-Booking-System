@@ -68,12 +68,13 @@
 // export const memberRoleAuth = async (req: Request, res: Response, next: NextFunction) => await authMiddleware(req,res,next,"member")
 // export const bothRoleAuth = async (req: Request, res: Response, next: NextFunction) => await authMiddleware(req,res,next,"both")
 
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, RequestHandler } from "express";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
+// Extend Express Request to include `user`
 declare global {
   namespace Express {
     interface Request {
@@ -82,6 +83,7 @@ declare global {
   }
 }
 
+// Token structure after decoding
 type DecodedToken = {
   userId: number;
   email: string;
@@ -91,56 +93,55 @@ type DecodedToken = {
 };
 
 // AUTHENTICATION HELPER FUNCTION
-export const verifyToken = async (token: string, secret: string) => {
+export const verifyToken = async (token: string, secret: string): Promise<DecodedToken | null> => {
   try {
     const decoded = jwt.verify(token, secret) as DecodedToken;
     return decoded;
-  } catch (error) {
+  } catch {
     return null;
   }
 };
 
-// AUTHORIZATION MIDDLEWARE
+// AUTHORIZATION MIDDLEWARE (core)
 export const authMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction,
-  requiredRoles: string
-) => {
+  requiredRoles: "admin" | "member" | "both"
+): Promise<void> => {
   const authHeader = req.header("Authorization");
   const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: "Authorization token missing" });
+    res.status(401).json({ error: "Authorization token missing" });
+    return;
   }
 
   const decodedToken = await verifyToken(token, process.env.JWT_SECRET as string);
 
   if (!decodedToken) {
-    return res.status(401).json({ error: "Invalid or expired token" });
+    res.status(401).json({ error: "Invalid or expired token" });
+    return;
   }
 
   req.user = decodedToken;
-
   const userType = decodedToken.userType;
 
-  if (requiredRoles === "both" && (userType === "admin" || userType === "member")) {
-    return next();
-  } else if (userType === requiredRoles) {
-    return next();
+  if (requiredRoles === "both" || userType === requiredRoles) {
+    next();
   } else {
-    return res.status(403).json({ error: "Forbidden: You do not have permission to access this resource" });
+    res.status(403).json({ error: "Forbidden: You do not have permission to access this resource" });
   }
 };
 
-// Role-based middleware exports
-export const adminRoleAuth = async (req: Request, res: Response, next: NextFunction) =>
-  await authMiddleware(req, res, next, "admin");
+// ✅ FACTORY FUNCTION — returns proper middleware type
+const roleAuth = (role: "admin" | "member" | "both"): RequestHandler => {
+  return (req, res, next) => {
+    authMiddleware(req, res, next, role);
+  };
+};
 
-export const memberRoleAuth = async (req: Request, res: Response, next: NextFunction) =>
-  await authMiddleware(req, res, next, "member");
-
-export const bothRoleAuth = async (req: Request, res: Response, next: NextFunction) =>
-  await authMiddleware(req, res, next, "both");
-
-
+// ✅ Export Role-specific middleware with correct type
+export const adminRoleAuth = roleAuth("admin");
+export const memberRoleAuth = roleAuth("member");
+export const bothRoleAuth = roleAuth("both");

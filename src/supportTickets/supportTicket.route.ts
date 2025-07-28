@@ -10,22 +10,20 @@ import {
 
 export const ticketRouter = Router();
 
-// Get all tickets → GET /api/support-tickets/
-ticketRouter.get("/", getTickets);
+// GET /api/support-tickets
+ticketRouter.get("/tickets", getTickets);
 
-// Get ticket by ID → GET /api/support-tickets/:id
-ticketRouter.get("/:id", getTicketById);
+// GET /api/support-tickets/user/:userId
+ticketRouter.get("/tickets/user/:userId", getTicketsByUserId);
 
-// Create a new ticket → POST /api/support-tickets/
-ticketRouter.post("/", createTicket);
+// GET /api/support-tickets/:id
+ticketRouter.get("/tickets/:id", getTicketById);
 
-// Update an existing ticket → PUT /api/support-tickets/:id
-ticketRouter.put("/:id", updateTicket);
+// POST /api/support-tickets
+ticketRouter.post("/tickets", createTicket);
 
-// Delete an existing ticket → DELETE /api/support-tickets/:id
-ticketRouter.delete("/:id", deleteTicket);
+// PUT /api/support-tickets/:id
+ticketRouter.put("/tickets/:id", updateTicket);
 
-// Get all tickets by User ID → GET /api/support-tickets/user/:userId
-ticketRouter.get("/user/:userId", getTicketsByUserId)
-
-
+// DELETE /api/support-tickets/:id
+ticketRouter.delete("/tickets/:id", deleteTicket);

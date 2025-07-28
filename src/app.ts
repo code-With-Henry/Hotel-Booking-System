@@ -24,9 +24,11 @@ app.use("/api", userRouter);
 app.use("/api", authRouter);
 app.use("/api", hotelRouter);
 app.use("/api", roomRouter);
-app.use("/api", bookingRouter);
+app.use("/api/bookings", bookingRouter);
 app.use("/api", paymentRouter);
-app.use("/api", ticketRouter);
+//app.use("/api", ticketRouter);
+app.use("/api/support-tickets", ticketRouter);
+
 
 // Default route
 app.get("/", (_req, res: Response) => {
