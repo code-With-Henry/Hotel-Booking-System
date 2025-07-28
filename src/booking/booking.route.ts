@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { createBooking, deleteBooking, getBookingById, getBookings, updateBooking } from "./booking.controller";
+import {createBooking, deleteBooking, getBookingById, getBookings, getMyBookings, updateBooking } from "./booking.controller";
+import { memberRoleAuth } from "../middleware/bearAuth";
+
 //import { adminRoleAuth } from "../middleware/bearAuth";
 
 
@@ -22,3 +24,9 @@ bookingRouter.put('/bookings/:id', updateBooking);
 
 // Delete an existing Booking
 bookingRouter.delete('/bookings/:id',deleteBooking);
+
+// Should be relative to /api/bookings
+bookingRouter.get("/my/bookings", getMyBookings)
+
+
+

@@ -1,27 +1,27 @@
 
-//Default Route
-###
-GET http://localhost:4000/
-
-
 //Get All users 
 ###
 GET http://localhost:4000/api/users/
-Authorization: 
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiYWRtaW4iLCJsYXN0TmFtZSI6Im1hbmFnZXIiLCJ1c2VyVHlwZSI6ImFkbWluIiwiZXhwIjoxNzUyMjI5Mzc5LCJpYXQiOjE3NTIyMjU3Nzl9.f7ifLrGOdh-mS_bC-D3-7OpcMhvOW4byWOjoKOqYXSk
 
 //Get user by id
 ###
 GET http://localhost:4000/api/users/2
 
+###
+GET http://localhost:4000/api/bookings/my/bookings
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjYsImVtYWlsIjoiZmVsbG9AZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiZmVsaXgiLCJsYXN0TmFtZSI6ImtpYmV0IiwidXNlclR5cGUiOiJtZW1iZXIiLCJleHAiOjE3NTI2NTk1MzgsImlhdCI6MTc1MjY1NTkzOH0.6SkTXsLVGiVZSg0HFTTlxQVZLfEDEfVyHq8UUnp04oo
+
 //Create new user
 ###
 POST http://localhost:4000/api/users/
+Authorization: 
 Content-Type: application/json
 
 {
-    "firstName": "melvin",
-    "lastName": "Koech",
-    "email": "melvin@gmail.com",
+    "firstName": "kelvin",
+    "lastName": "Kimtai",
+    "email": "kelvin@gmail.com",
     "contactPhone": "0716037570",
     "address":"123005",
     "userType": "member",
@@ -56,13 +56,27 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "newton",
-  "lastName": "Rop",
-  "email": "newtonrop@gmail.com",
-  "password": "admin",
+  "firstName": "admin",
+  "lastName": "manager",
+  "email": "admin@gmail.com",
+  "password": "admin1234",
   "contactPhone": "0716037571",
   "address":"1220005",
   "userType": "admin"
+}
+
+###
+POST http://localhost:4000/api/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "felix",
+  "lastName": "kibet",
+  "email": "fello@gmail.com",
+  "password": "12345678",
+  "contactPhone": "0717037571",
+  "address":"1220005",
+  "userType": "member"
 }
 
 //Login user
@@ -71,8 +85,16 @@ POST http://localhost:4000/api/auth/login
 content-type: application/json
 
 {
-  "email": "newtonrop@gmail.com",
-  "password": "admin"
+  "email": "fello@gmail.com",
+  "password": "12345678"
+}
+###
+POST http://localhost:4000/api/auth/login
+content-type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "admin1234"
 }
 
 // 2. Endpoints for Hotel
@@ -91,25 +113,52 @@ POST http://localhost:4000/api/hotels/
 Content-Type: application/json
 
 {
-  "name": "Central View inn Hotel",
-  "location": "baringo",
-  "address": "10000421"
+  "name": "Ocean View Resort",
+  "location": "Mombasa",
+  "address": "Thika Road, Nairobi, Kenya",
+  "contactPhone": "+254712345678",
+  "category": "5-star",
+  "rating": 5,
+  "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+  "priceRange": "$150 - $300",
+  "amenities": [
+    "Free WiFi",
+    "Swimming Pool",
+    "Gym",
+    "Spa",
+    "Restaurant",
+    "Conference Rooms"
+  ]
 }
+
 
 //Update Hotel by id 
 ###
-PUT http://localhost:4000/api/hotels/1
+PUT http://localhost:4000/api/hotels/2
 Content-Type: application/json
 
 {
-  "name": "5 star Hotel",
-  "location": "Nairobi",
-  "address": "40000400"
+  "name": "Ocean View Resort",
+  "location": "Mombasa",
+  "address": "Thika Road, Nairobi, Kenya",
+  "contactPhone": "+254712345678",
+  "category": "4-star",
+  "rating": 5,
+  "imageUrl": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+  "priceRange": "$150 - $300",
+  "amenities": [
+    "Free WiFi",
+    "Swimming Pool",
+    "Gym",
+    "Spa",
+    "Restaurant",
+    "Conference Rooms"
+  ]
 }
 
 //Delete Hotel by id
 ###
-DELETE http://localhost:4000/api/hotels/2
+DELETE http://localhost:4000/api/hotels/1
 
 // 3. Endpoints for Room
 
@@ -119,7 +168,7 @@ GET http://localhost:4000/api/rooms/
 
 //Get Room by id 
 ###
-GET http://localhost:4000/api/rooms/2
+GET http://localhost:4000/api/rooms/1
 
 //Create new Room
 ###
@@ -127,13 +176,16 @@ POST http://localhost:4000/api/rooms/
 Content-Type: application/json
 
 {
-  "hotelId": 3,
-  "roomType": "Bungalow Room",
-  "pricePerNight": 6000.00,
+  "hotelId": 1,
+  "roomType": "Standard Room",
+  "pricePerNight": 120.50,
   "capacity": 3,
-  "amenities": "WiFi,Air Conditioning,TV,Mini Bar",
-  "isAvailable": true
+  "amenities": ["wifi", "air conditioning", "balcony"],
+  "isAvailable": true,
+  "description": "A spacious deluxe suite with sea view and private balcony.",
+  "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREpk8q4HABvDAZ7Fb8P4Ri_3BrApiC_2ZZ8XOpoPpoAacaU9QyZWj-ogI&s"
 }
+
 
 //Update Existing Room by id
 ###
@@ -142,12 +194,14 @@ Content-Type: application/json
 
 {
   "hotelId": 1,
-  "roomType": "Twin Room",
-  "pricePerNight": 4000.00,
-  "capacity": 5,
-  "amenities": "WiFi,Air Conditioning,TV,Mini Bar,shawer",
-  "isAvailable": true
+  "roomType": "Deluxe Suite",
+  "pricePerNight": 120.50,
+  "capacity": 3,
+  "amenities": ["wifi", "air conditioning", "balcony"],
+  "isAvailable": true,
+  "description": "A spacious deluxe suite with sea view and private balcony."
 }
+
 
 //Delete Room by id
 ###
@@ -169,7 +223,7 @@ Content-Type: application/json
 
 {
   "userId": 4,
-  "roomId": 8,
+  "roomId": 2,
   "checkInDate": "2025-07-10T14:00:00Z",
   "checkOutDate": "2025-07-12T10:00:00Z",
   "totalAmount": "1500.00",
@@ -189,6 +243,9 @@ Content-Type: application/json
   "totalAmount": "1400.00",
   "bookingStatus": "Pending"
 }
+
+###
+PUT http://localhost:4000/api/bookings/cancel/9
 
 //Delete Booking by id
 ###
@@ -210,7 +267,7 @@ POST http://localhost:4000/api/payments/
 Content-Type: application/json
 
 {
-  "bookingId": 3,
+  "bookingId": 2,
   "amount": "6000.00",
   "paymentMethod": "Mpesa",
   "transactionId": "MP123456789",
@@ -220,7 +277,7 @@ Content-Type: application/json
 
 //Create new Payments
 ###
-PUT http://localhost:4000/api/payments/1
+PUT http://localhost:4000/api/payments/2
 Content-Type: application/json
 
 {
@@ -252,7 +309,7 @@ POST http://localhost:4000/api/tickets/
 Content-Type: application/json
 
 {
-  "userId": 4,
+  "userId": 2,
   "subject": "Request for refund",
   "description": "I canceled my reservation two days ago and have not yet received the refund.",
   "status": "Resolved"

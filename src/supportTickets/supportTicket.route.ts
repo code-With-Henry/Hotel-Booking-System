@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createTicket, deleteTicket, getTicketById, getTickets, updateTicket } from "./supportTicket.controller";
+import { createTicket, deleteTicket, getTicketById, getTickets, getTicketsByUserId, updateTicket } from "./supportTicket.controller";
 //import { adminRoleAuth } from "../middleware/bearAuth";
 
 
@@ -22,3 +22,5 @@ ticketRouter.put('/tickets/:id', updateTicket);
 
 // Delete an existing ticket
 ticketRouter.delete('/tickets/:id', deleteTicket);
+
+ticketRouter.get("/user/:userId", getTicketsByUserId)

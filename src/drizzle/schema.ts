@@ -9,6 +9,7 @@ import {
   pgEnum,
   boolean,
   date,
+  jsonb,
 } from "drizzle-orm/pg-core";
 
 // Enums
@@ -31,7 +32,7 @@ export const usersTable = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-// 2. Hotels Table
+// 2. Hotels table
 export const hotelsTable = pgTable("hotels", {
   hotelId: serial("hotel_id").primaryKey(),
   name: varchar("name"),
@@ -40,6 +41,9 @@ export const hotelsTable = pgTable("hotels", {
   contactPhone: varchar("contact_phone"),
   category: varchar("category"),
   rating: integer("rating"),
+  imageUrl: varchar("image_url"),
+  priceRange: varchar("price_range"),
+  amenities: jsonb("amenities").notNull(), // JSON array
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -51,8 +55,9 @@ export const roomsTable = pgTable("rooms", {
   roomType: varchar("room_type"),
   pricePerNight: decimal("price_per_night"),
   capacity: integer("capacity"),
-  amenities: varchar("amenities"),
+  amenities: jsonb("amenities").notNull(), 
   isAvailable: boolean("is_available").default(true),
+  imageUrl: varchar("image_url", { length: 255 }),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

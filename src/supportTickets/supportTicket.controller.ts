@@ -43,6 +43,7 @@ export const getTicketById = async (req: Request, res: Response) => {
 // Create a new support ticket
 export const createTicket = async (req: Request, res: Response) => {
   const { userId, subject, description, status } = req.body;
+  console.log("Body received:", req.body);
 
   if (!userId || !subject || !description) {
     res.status(400).json({ error: "User ID, subject, and description are required" });
@@ -117,5 +118,31 @@ export const deleteTicket = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to delete ticket" });
+  }
+};
+
+
+export const getTicketsByUserId = async (req: Request, res: Response) => {
+  const userId = parseInt(req.params.userId);
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: "Invalid user ID" });
+  }
+
+  try {
+    const userTickets = await getTicketsServices();
+
+    if (!userTickets) {
+      return res.status(404).json({ message: "No tickets found" });
+    }
+
+    const filtered = userTickets.filter((ticket) => ticket.userId === userId);
+
+    if (filtered.length === 0) {
+      return res.status(404).json({ message: "No tickets found for this user" });
+    }
+
+    res.status(200).json(filtered);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message || "Failed to fetch user tickets" });
   }
 };

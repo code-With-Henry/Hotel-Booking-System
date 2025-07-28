@@ -6,10 +6,12 @@ import { createUserServices, deleteUserServices, getUserByIdServices, getUsersSe
 export const getUsers = async (req: Request, res: Response) => {
     try {
         const allUsers = await getUsersServices();
-        if (allUsers == null || allUsers.length == 0) {
+        if (!allUsers  || allUsers.length === 0) {
           res.status(404).json({ message: "No users found" });
         }else{
-            res.status(200).json(allUsers);             
+            // Hide password from backend for security purpose
+            const safeUsers = allUsers.map(({password, ...user}) => user);
+            res.status(200).json(safeUsers);             
         }            
     } catch (error:any) {
         res.status(500).json({ error:error.message || "Failed to fetch users" });

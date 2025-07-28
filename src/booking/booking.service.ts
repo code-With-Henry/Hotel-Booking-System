@@ -51,3 +51,31 @@ export const deleteBookingServices = async(bookingId: number):Promise<string> =>
    await db.delete(bookingsTable).where(eq(bookingsTable.bookingId,bookingId));
    return "User Delete Sucessfully";
 }
+
+// Get bookings by User ID (For authenticated user's dashboard)
+export const getBookingsByUserIdServices = async (userId: number): Promise<TBookingSelect[]> => {
+  return await db.query.bookingsTable.findMany({
+    where: eq(bookingsTable.userId, userId),
+    with: {
+      user: {
+        columns: {
+          userId: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          contactPhone: true,
+          address: true,
+        },
+      },
+      room: true,
+      payment: true,
+    },
+    orderBy: [desc(bookingsTable.bookingId)],
+  })
+}
+
+
+
+
+
+

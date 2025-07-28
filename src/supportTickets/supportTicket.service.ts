@@ -10,6 +10,9 @@ import { supportTicketsTable, TTicketInsert, TTicketSelect } from "../drizzle/sc
 //Get all supportTickets
 export const getTicketsServices = async():Promise<TTicketSelect[] | null> => {
      return await  db.query.supportTicketsTable.findMany({
+      // with:{
+      //   user: true,
+      // },
        orderBy:[desc(supportTicketsTable.ticketId)]
      });
 }
@@ -37,4 +40,12 @@ export const updateTicketServices = async(ticketId: number, ticket:TTicketInsert
 export const deleteTicketServices = async(ticketId: number):Promise<string> => {
    await db.delete(supportTicketsTable).where(eq(supportTicketsTable.ticketId,ticketId));
    return "Ticket Delete Sucessfully";
+}
+
+// Get all tickets for a specific user
+export const getTicketsByUserIdService = async (userId: number): Promise<TTicketSelect[]> => {
+  return await db.query.supportTicketsTable.findMany({
+    where: eq(supportTicketsTable.userId, userId),
+    orderBy: [desc(supportTicketsTable.ticketId)]
+  });
 }

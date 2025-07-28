@@ -22,7 +22,7 @@ export const getUserByIdServices = async(userId: number):Promise<TUserSelect | u
 
 // Create a new user
 export const createUserServices = async(user:TUserInsert):Promise<string> => {
-       await db.insert(usersTable).values(user).returning();
+        await db.insert(usersTable).values(user).returning();
         return "User Created Successfully";
 }
 
@@ -32,7 +32,7 @@ export const updateUserServices = async(userId: number, user:TUserInsert):Promis
     return "User Updated Succeffully";
 }
 
-// Update an existing user
+// Delete an existing user
 export const deleteUserServices = async(userId: number):Promise<string> => {
    await db.delete(usersTable).where(eq(usersTable.userId,userId));
    return "User Delete Sucessfully";

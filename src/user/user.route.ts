@@ -9,17 +9,17 @@ export const userRouter = Router();
 
 
 // Get all users
-userRouter.get('/users',adminRoleAuth, getUsers);
+userRouter.get('/users', getUsers);
 
 // Get user by ID
 userRouter.get('/users/:id', getUserById);
 
 // Create a new user
-userRouter.post('/users',adminRoleAuth,  createUser);
+userRouter.post('/users', createUser);
 
 // Update an existing user
-userRouter.put('/users/:id',adminRoleAuth, updateUser);
+userRouter.put('/users/:id', updateUser);
 
 
 // Delete an existing user
-userRouter.delete('/users/:id',adminRoleAuth, deleteUser);
+userRouter.delete('/users/:id', deleteUser);

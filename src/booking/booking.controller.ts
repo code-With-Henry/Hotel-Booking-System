@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 import {createBookingServices,getBookingsServices,getBookingByIdServices,updateBookingServices,deleteBookingServices} from "./booking.service";
 
@@ -92,15 +93,16 @@ export const updateBooking = async (req: Request, res: Response) => {
     return;
   }
 
-  try {
-    const updatedBooking = await updateBookingServices(bookingId, {
-      userId,
-      roomId,
-      checkInDate: new Date(checkInDate).toISOString(),
-      checkOutDate: new Date(checkOutDate).toISOString(),
-      totalAmount,
-      bookingStatus: bookingStatus || "Pending"
-    });
+ try {
+  const updatedBooking = await updateBookingServices(bookingId, {
+    userId,
+    roomId,
+    checkInDate: new Date(checkInDate).toISOString(),
+    checkOutDate: new Date(checkOutDate).toISOString(),
+    totalAmount,
+    bookingStatus: bookingStatus || "Pending",
+  });
+
 
     if (!updatedBooking) {
       res.status(404).json({ message: "Booking not found or failed to update" });
@@ -129,5 +131,29 @@ export const deleteBooking = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to delete booking" });
+  }
+};
+
+
+
+import { NextFunction } from "express";
+import { getBookingsByUserIdServices } from "./booking.service";
+
+export const getMyBookings = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      res.status(401).json({ message: "Unauthorized - User ID not found" });
+      return;
+    }
+
+    const myBookings = await getBookingsByUserIdServices(userId);
+    res.status(200).json(myBookings ?? []);
+  } catch (error) {
+    next(error);
   }
 };

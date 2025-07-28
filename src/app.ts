@@ -28,8 +28,11 @@ app.use("/api", bookingRouter);
 app.use("/api",paymentRouter);
 app.use("/api",ticketRouter);
 app.use("/api",authRouter);
-app.use('/api/auth', authRouter);  // ✅ Confirm this is present
-app.use('/api/users', userRouter); // ✅ And this one for users
+app.use('/api/auth', authRouter);  
+app.use('/api/users', userRouter); 
+app.use('/api/bookings', bookingRouter);
+
+app.use("/api/tickets", ticketRouter); 
 
 //  Default route
 app.get('/', (req, res: Response) => {

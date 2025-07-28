@@ -7,16 +7,18 @@ import {
   updateHotelServices,
 } from "./hotel.service";
 
-// Business logic for hotel-related operations
-
+// GET /api/hotels?location=...
 export const getHotels = async (req: Request, res: Response) => {
   try {
-    const hotels = await getHotelsServices();
+    const { location } = req.query;
+
+    const hotels = await getHotelsServices(location as string | undefined);
+
     if (!hotels || hotels.length === 0) {
-      res.status(404).json({ message: "No hotels found" });
-    } else {
-      res.status(200).json(hotels);
+      return res.status(404).json({ message: "No hotels found" });
     }
+
+    res.status(200).json(hotels);
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to fetch hotels" });
   }
@@ -25,28 +27,37 @@ export const getHotels = async (req: Request, res: Response) => {
 export const getHotelById = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    res.status(400).json({ error: "Invalid hotel ID" });
-    return;
+    return res.status(400).json({ error: "Invalid hotel ID" });
   }
 
   try {
     const hotel = await getHotelByIdServices(hotelId);
     if (!hotel) {
-      res.status(404).json({ message: "Hotel not found" });
-    } else {
-      res.status(200).json(hotel);
+      return res.status(404).json({ message: "Hotel not found" });
     }
+    res.status(200).json(hotel);
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to fetch hotel" });
   }
 };
 
 export const createHotel = async (req: Request, res: Response) => {
-  const { name, location, address, contactPhone, category, rating } = req.body;
+  const {
+    name,
+    location,
+    address,
+    contactPhone,
+    category,
+    rating,
+    imageUrl,
+    priceRange,
+    amenities,
+  } = req.body;
 
   if (!name || !location || !address) {
-    res.status(400).json({ error: "Name, location, and address are required" });
-    return;
+    return res.status(400).json({
+      error: "Name, location, and address are required",
+    });
   }
 
   try {
@@ -57,13 +68,12 @@ export const createHotel = async (req: Request, res: Response) => {
       contactPhone: contactPhone || null,
       category: category || null,
       rating: rating || null,
+      imageUrl: imageUrl || null,
+      priceRange: priceRange || null,
+      amenities: Array.isArray(amenities) ? amenities : [],
     });
 
-    if (!newHotel) {
-      res.status(500).json({ message: "Failed to create hotel" });
-    } else {
-      res.status(201).json({ message: newHotel });
-    }
+    res.status(201).json({ message: newHotel });
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to create hotel" });
   }
@@ -72,15 +82,25 @@ export const createHotel = async (req: Request, res: Response) => {
 export const updateHotel = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    res.status(400).json({ error: "Invalid hotel ID" });
-    return;
+    return res.status(400).json({ error: "Invalid hotel ID" });
   }
 
-  const { name, location, address, contactPhone, category, rating } = req.body;
+  const {
+    name,
+    location,
+    address,
+    contactPhone,
+    category,
+    rating,
+    imageUrl,
+    priceRange,
+    amenities,
+  } = req.body;
 
   if (!name || !location || !address) {
-    res.status(400).json({ error: "Name, location, and address are required" });
-    return;
+    return res.status(400).json({
+      error: "Name, location, and address are required",
+    });
   }
 
   try {
@@ -91,13 +111,16 @@ export const updateHotel = async (req: Request, res: Response) => {
       contactPhone: contactPhone || null,
       category: category || null,
       rating: rating || null,
+      imageUrl: imageUrl || null,
+      priceRange: priceRange || null,
+      amenities: Array.isArray(amenities) ? amenities : [],
     });
 
     if (!updatedHotel) {
-      res.status(404).json({ message: "Hotel not found or failed to update" });
-    } else {
-      res.status(200).json({ message: updatedHotel });
+      return res.status(404).json({ message: "Hotel not found or failed to update" });
     }
+
+    res.status(200).json({ message: updatedHotel });
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to update hotel" });
   }
@@ -106,16 +129,15 @@ export const updateHotel = async (req: Request, res: Response) => {
 export const deleteHotel = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    res.status(400).json({ error: "Invalid hotel ID" });
-    return;
+    return res.status(400).json({ error: "Invalid hotel ID" });
   }
 
   try {
     const deletedHotel = await deleteHotelServices(hotelId);
     if (deletedHotel) {
-      res.status(200).json({ message: "Hotel deleted successfully" });
+      return res.status(200).json({ message: "Hotel deleted successfully" });
     } else {
-      res.status(404).json({ message: "Hotel not found" });
+      return res.status(404).json({ message: "Hotel not found" });
     }
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to delete hotel" });

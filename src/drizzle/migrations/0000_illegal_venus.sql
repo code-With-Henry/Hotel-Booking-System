@@ -22,6 +22,9 @@ CREATE TABLE "hotels" (
 	"contact_phone" varchar,
 	"category" varchar,
 	"rating" integer,
+	"image_url" varchar,
+	"price_range" varchar,
+	"amenities" jsonb NOT NULL,
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
 );
@@ -44,7 +47,7 @@ CREATE TABLE "rooms" (
 	"room_type" varchar,
 	"price_per_night" numeric,
 	"capacity" integer,
-	"amenities" varchar,
+	"amenities" jsonb NOT NULL,
 	"is_available" boolean DEFAULT true,
 	"created_at" timestamp DEFAULT now()
 );
