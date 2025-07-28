@@ -122,8 +122,12 @@ export const deleteTicket = async (req: Request, res: Response) => {
 };
 
 
-export const getTicketsByUserId = async (req: Request, res: Response) => {
+export const getTicketsByUserId = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
   const userId = parseInt(req.params.userId);
+
   if (isNaN(userId)) {
     return res.status(400).json({ error: "Invalid user ID" });
   }
@@ -131,7 +135,7 @@ export const getTicketsByUserId = async (req: Request, res: Response) => {
   try {
     const userTickets = await getTicketsServices();
 
-    if (!userTickets) {
+    if (!userTickets || userTickets.length === 0) {
       return res.status(404).json({ message: "No tickets found" });
     }
 
@@ -141,8 +145,10 @@ export const getTicketsByUserId = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "No tickets found for this user" });
     }
 
-    res.status(200).json(filtered);
+    return res.status(200).json(filtered);
   } catch (error: any) {
-    res.status(500).json({ error: error.message || "Failed to fetch user tickets" });
+    return res.status(500).json({
+      error: error.message || "Failed to fetch user tickets",
+    });
   }
 };

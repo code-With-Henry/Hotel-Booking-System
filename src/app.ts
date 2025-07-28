@@ -32,7 +32,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter); 
 app.use('/api/bookings', bookingRouter);
 
-app.use("/api/tickets", ticketRouter); 
 
 //  Default route
 app.get('/', (req, res: Response) => {

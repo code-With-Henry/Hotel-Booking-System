@@ -1,26 +1,27 @@
 import { Router } from "express";
-import { createTicket, deleteTicket, getTicketById, getTickets, getTicketsByUserId, updateTicket } from "./supportTicket.controller";
-//import { adminRoleAuth } from "../middleware/bearAuth";
-
+import {
+  createTicket,
+  deleteTicket,
+  getTicketById,
+  getTickets,
+  updateTicket
+} from "./supportTicket.controller";
 
 export const ticketRouter = Router();
 
-//definition Routes for ticket
+// Get all tickets → GET /api/support-tickets/
+ticketRouter.get("/", getTickets);
 
-// Get all tickets
-ticketRouter.get('/tickets', getTickets);
+// Get ticket by ID → GET /api/support-tickets/:id
+ticketRouter.get("/:id", getTicketById);
 
-// Get ticket by ID
-ticketRouter.get('/tickets/:id', getTicketById);
+// Create a new ticket → POST /api/support-tickets/
+ticketRouter.post("/", createTicket);
 
-// Create a new ticket
-ticketRouter.post('/tickets', createTicket);
+// Update an existing ticket → PUT /api/support-tickets/:id
+ticketRouter.put("/:id", updateTicket);
 
-// Update an existing ticket
-ticketRouter.put('/tickets/:id', updateTicket);
+// Delete an existing ticket → DELETE /api/support-tickets/:id
+ticketRouter.delete("/:id", deleteTicket);
 
 
-// Delete an existing ticket
-ticketRouter.delete('/tickets/:id', deleteTicket);
-
-ticketRouter.get("/user/:userId", getTicketsByUserId)
