@@ -4,6 +4,7 @@ import {
   deleteTicket,
   getTicketById,
   getTickets,
+  getTicketsByUserId,
   updateTicket
 } from "./supportTicket.controller";
 
@@ -23,5 +24,8 @@ ticketRouter.put("/:id", updateTicket);
 
 // Delete an existing ticket → DELETE /api/support-tickets/:id
 ticketRouter.delete("/:id", deleteTicket);
+
+// Get all tickets by User ID → GET /api/support-tickets/user/:userId
+ticketRouter.get("/user/:userId", getTicketsByUserId)
 
 

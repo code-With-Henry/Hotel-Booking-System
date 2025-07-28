@@ -70,13 +70,13 @@ POST http://localhost:4000/api/auth/register
 Content-Type: application/json
 
 {
-  "firstName": "felix",
-  "lastName": "kibet",
-  "email": "fello@gmail.com",
-  "password": "12345678",
-  "contactPhone": "0717037571",
+  "firstName": "admin",
+  "lastName": "manage",
+  "email": "admin@gmail.com",
+  "password": "admin123",
+  "contactPhone": "0717037500",
   "address":"1220005",
-  "userType": "member"
+  "userType": "admin"
 }
 
 //Login user
@@ -85,8 +85,8 @@ POST http://localhost:4000/api/auth/login
 content-type: application/json
 
 {
-  "email": "fello@gmail.com",
-  "password": "12345678"
+  "email": "admin@gmail.com",
+  "password": "admin123"
 }
 ###
 POST http://localhost:4000/api/auth/login

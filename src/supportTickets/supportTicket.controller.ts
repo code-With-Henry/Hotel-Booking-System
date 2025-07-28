@@ -3,6 +3,7 @@ import {
   createTicketServices,
   deleteTicketServices,
   getTicketByIdServices,
+  getTicketsByUserIdService,
   getTicketsServices,
   updateTicketServices
 } from "./supportTicket.service";
@@ -122,33 +123,25 @@ export const deleteTicket = async (req: Request, res: Response) => {
 };
 
 
-export const getTicketsByUserId = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
+// Get all support tickets by User ID
+export const getTicketsByUserId = async (req: Request, res: Response) => {
   const userId = parseInt(req.params.userId);
 
   if (isNaN(userId)) {
-    return res.status(400).json({ error: "Invalid user ID" });
+    res.status(400).json({ error: "Invalid user ID" });
+    return;
   }
 
   try {
-    const userTickets = await getTicketsServices();
+    const userTickets = await getTicketsByUserIdService(userId);
 
     if (!userTickets || userTickets.length === 0) {
-      return res.status(404).json({ message: "No tickets found" });
+      res.status(404).json({ message: "No tickets found for this user" });
+      return;
     }
 
-    const filtered = userTickets.filter((ticket) => ticket.userId === userId);
-
-    if (filtered.length === 0) {
-      return res.status(404).json({ message: "No tickets found for this user" });
-    }
-
-    return res.status(200).json(filtered);
+    res.status(200).json(userTickets);
   } catch (error: any) {
-    return res.status(500).json({
-      error: error.message || "Failed to fetch user tickets",
-    });
+    res.status(500).json({ error: error.message || "Failed to fetch user tickets" });
   }
 };
