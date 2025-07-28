@@ -1,23 +1,16 @@
-# Node modules
+# Node
 node_modules/
-
-# Environment variables
-.env
-.env.*    # In case you have .env.development, .env.production, etc.
-
-# Build output
 dist/
+.env
 
 # Logs
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+logs
+*.log
 
-# IDE settings
+# Editor settings
 .vscode/
 .idea/
 
-# OS files
+# System files
 .DS_Store
 Thumbs.db
