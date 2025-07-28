@@ -1,24 +1,14 @@
+// hotel.router.ts
 import { Router } from "express";
 import { createHotel, deleteHotel, getHotelById, getHotels, updateHotel } from "./hotel.controller";
-//import { adminRoleAuth } from "../middleware/bearAuth";
 
 
-export const hotelRouter = Router();
+const hotelRouter = Router();
 
-// Hotel routes definition
+hotelRouter.get("/hotels", getHotels); // GET /api/hotels
+hotelRouter.get("/hotels/:id", getHotelById); // GET /api/hotels/:id
+hotelRouter.post("/hotels", createHotel); // POST /api/hotels
+hotelRouter.put("/hotels/:id", updateHotel); // PUT /api/hotels/:id
+hotelRouter.delete("/hotels/:id", deleteHotel); // DELETE /api/hotels/:id
 
-
-// Get all Hotels
-hotelRouter.get('/hotels', getHotels);
-
-// Get Hotel by ID
-hotelRouter.get('/hotels/:id', getHotelById);
-
-// Create a new Hotel
-hotelRouter.post('/hotels',  createHotel);
-
-// Update an existing Hotel
-hotelRouter.put('/hotels/:id',updateHotel);
-
-// Delete an existing Hotel
-hotelRouter.delete('/hotels/:id', deleteHotel);
+export default hotelRouter;

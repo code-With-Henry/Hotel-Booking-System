@@ -11,33 +11,40 @@ import {
 export const getHotels = async (req: Request, res: Response) => {
   try {
     const { location } = req.query;
-
     const hotels = await getHotelsServices(location as string | undefined);
 
     if (!hotels || hotels.length === 0) {
-      return res.status(404).json({ message: "No hotels found" });
+      res.status(404).json({ message: "No hotels found" });
+      return;
     }
 
     res.status(200).json(hotels);
+    return;
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to fetch hotels" });
+    return;
   }
 };
 
 export const getHotelById = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    return res.status(400).json({ error: "Invalid hotel ID" });
+    res.status(400).json({ error: "Invalid hotel ID" });
+    return;
   }
 
   try {
     const hotel = await getHotelByIdServices(hotelId);
     if (!hotel) {
-      return res.status(404).json({ message: "Hotel not found" });
+      res.status(404).json({ message: "Hotel not found" });
+      return;
     }
+
     res.status(200).json(hotel);
+    return;
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to fetch hotel" });
+    return;
   }
 };
 
@@ -55,9 +62,8 @@ export const createHotel = async (req: Request, res: Response) => {
   } = req.body;
 
   if (!name || !location || !address) {
-    return res.status(400).json({
-      error: "Name, location, and address are required",
-    });
+    res.status(400).json({ error: "Name, location, and address are required" });
+    return;
   }
 
   try {
@@ -73,16 +79,24 @@ export const createHotel = async (req: Request, res: Response) => {
       amenities: Array.isArray(amenities) ? amenities : [],
     });
 
+    if (!newHotel) {
+      res.status(500).json({ message: "Failed to create hotel" });
+      return;
+    }
+
     res.status(201).json({ message: newHotel });
+    return;
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to create hotel" });
+    return;
   }
 };
 
 export const updateHotel = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    return res.status(400).json({ error: "Invalid hotel ID" });
+    res.status(400).json({ error: "Invalid hotel ID" });
+    return;
   }
 
   const {
@@ -98,9 +112,8 @@ export const updateHotel = async (req: Request, res: Response) => {
   } = req.body;
 
   if (!name || !location || !address) {
-    return res.status(400).json({
-      error: "Name, location, and address are required",
-    });
+    res.status(400).json({ error: "Name, location, and address are required" });
+    return;
   }
 
   try {
@@ -117,29 +130,36 @@ export const updateHotel = async (req: Request, res: Response) => {
     });
 
     if (!updatedHotel) {
-      return res.status(404).json({ message: "Hotel not found or failed to update" });
+      res.status(404).json({ message: "Hotel not found or failed to update" });
+      return;
     }
 
     res.status(200).json({ message: updatedHotel });
+    return;
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to update hotel" });
+    return;
   }
 };
 
 export const deleteHotel = async (req: Request, res: Response) => {
   const hotelId = parseInt(req.params.id);
   if (isNaN(hotelId)) {
-    return res.status(400).json({ error: "Invalid hotel ID" });
+    res.status(400).json({ error: "Invalid hotel ID" });
+    return;
   }
 
   try {
     const deletedHotel = await deleteHotelServices(hotelId);
-    if (deletedHotel) {
-      return res.status(200).json({ message: "Hotel deleted successfully" });
-    } else {
-      return res.status(404).json({ message: "Hotel not found" });
+    if (!deletedHotel) {
+      res.status(404).json({ message: "Hotel not found" });
+      return;
     }
+
+    res.status(200).json({ message: "Hotel deleted successfully" });
+    return;
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Failed to delete hotel" });
+    return;
   }
 };
