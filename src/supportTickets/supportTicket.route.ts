@@ -10,22 +10,22 @@ import {
 
 export const ticketRouter = Router();
 
-// GET /api/support-tickets
+// ✅ GET /api/tickets
 ticketRouter.get("/tickets", getTickets);
 
-// GET /api/support-tickets/user/:userId
+// ✅ GET /api/tickets/user/:userId
 ticketRouter.get("/tickets/user/:userId", getTicketsByUserId);
 
-// GET /api/support-tickets/:id
+// ✅ GET /api/tickets/:id
 ticketRouter.get("/tickets/:id", getTicketById);
 
-// POST /api/support-tickets
+// ✅ POST /api/tickets
 ticketRouter.post("/tickets", createTicket);
 
-// PUT /api/support-tickets/:id
+// ✅ PUT /api/tickets/:id
 ticketRouter.put("/tickets/:id", updateTicket);
 
-// DELETE /api/support-tickets/:id
+// ✅ DELETE /api/tickets/:id
 ticketRouter.delete("/tickets/:id", deleteTicket);
 
-ticketRouter.get("/user/:userId", getTicketsByUserId);
+

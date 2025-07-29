@@ -26,7 +26,7 @@ bookingRouter.put('/bookings/:id', updateBooking);
 bookingRouter.delete('/bookings/:id',deleteBooking);
 
 // Should be relative to /api/bookings
-bookingRouter.get("/my/bookings", memberRoleAuth, getMyBookings);
+bookingRouter.get("/bookings/my/bookings", memberRoleAuth, getMyBookings);
 
 
 
