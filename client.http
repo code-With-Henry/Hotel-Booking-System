@@ -309,7 +309,7 @@ POST http://localhost:4000/api/tickets/
 Content-Type: application/json
 
 {
-  "userId": 4,
+  "userId": 14,
   "subject": "Request for refund",
   "description": "I canceled my reservation two days ago and have not yet received the refund.",
   "status": "Resolved"
