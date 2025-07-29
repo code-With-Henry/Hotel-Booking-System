@@ -27,3 +27,5 @@ ticketRouter.put("/tickets/:id", updateTicket);
 
 // DELETE /api/support-tickets/:id
 ticketRouter.delete("/tickets/:id", deleteTicket);
+
+ticketRouter.get("/user/:userId", getTicketsByUserId);

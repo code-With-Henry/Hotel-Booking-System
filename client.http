@@ -222,8 +222,8 @@ POST http://localhost:4000/api/bookings/
 Content-Type: application/json
 
 {
-  "userId": 4,
-  "roomId": 2,
+  "userId": 12,
+  "roomId": 3,
   "checkInDate": "2025-07-10T14:00:00Z",
   "checkOutDate": "2025-07-12T10:00:00Z",
   "totalAmount": "1500.00",
