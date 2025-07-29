@@ -5,7 +5,7 @@ import { createHotel, deleteHotel, getHotelById, getHotels, updateHotel } from "
 
 const hotelRouter = Router();
 
-hotelRouter.get("/", getHotels); // GET /api/hotels
+hotelRouter.get("/hotels", getHotels); // GET /api/hotels
 hotelRouter.get("/hotels/:id", getHotelById); // GET /api/hotels/:id
 hotelRouter.post("/hotels", createHotel); // POST /api/hotels
 hotelRouter.put("/hotels/:id", updateHotel); // PUT /api/hotels/:id

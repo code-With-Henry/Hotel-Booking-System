@@ -26,8 +26,9 @@ app.use("/api", hotelRouter);
 app.use("/api", roomRouter);
 app.use("/api", bookingRouter);
 app.use("/api", paymentRouter);
-app.use("/api", ticketRouter);
-app.use("/api/tickets", ticketRouter);
+app.use("/api/support-tickets", ticketRouter);
+
+
 
 
 
