@@ -9,6 +9,7 @@ import {
 
 // GET /api/hotels?location=...
 export const getHotels = async (req: Request, res: Response) => {
+  console.log("🔥 GET /api/hotels called");
   try {
     const { location } = req.query;
     const hotels = await getHotelsServices(location as string | undefined);
