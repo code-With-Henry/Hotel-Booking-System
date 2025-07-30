@@ -9,6 +9,7 @@ import { bookingRouter } from "./booking/booking.route";
 import { paymentRouter } from "./payments/payment.route";
 import { ticketRouter } from "./supportTickets/supportTicket.route";
 import hotelRouter from "./hotel/hotel.route";
+import mpesaRouter from "./mpesa/mpesa.route";
 
 const app: Application = express();
 
@@ -25,10 +26,9 @@ app.use("/api", authRouter);
 app.use("/api", hotelRouter);
 app.use("/api", roomRouter);
 app.use("/api", bookingRouter);
-app.use("/api", paymentRouter);
 app.use("/api", ticketRouter);
-
-
+app.use("/api", paymentRouter);
+app.use("/api", mpesaRouter);
 
 
 

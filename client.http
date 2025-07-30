@@ -334,5 +334,17 @@ DELETE http://localhost:4000/api/tickets/4
 
 
 
+### Initiate M-Pesa Payment
+POST http://localhost:4000/api/mpesa/initiate
+Content-Type: application/json
+
+{
+  "bookingId": 11,
+  "phoneNumber": "254708374149",
+  "amount": 1500
+}
+
+
+
 
 
